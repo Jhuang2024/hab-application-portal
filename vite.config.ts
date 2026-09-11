@@ -1,5 +1,6 @@
 import vinext from "vinext";
 import { defineConfig } from "vite";
+import { existsSync } from "node:fs";
 import { readExecutionProfile } from "./scripts/execution-profile.mjs";
 import { sites } from "./build/sites-vite-plugin";
 
@@ -11,7 +12,7 @@ const r2 = process.env.R2_BINDING;
 
 const isCodexSeatbeltSandbox = process.env.CODEX_SANDBOX === "seatbelt";
 const managedLinux = readExecutionProfile() === "managed-linux";
-const useManagedSites = !process.env.VERCEL;
+const useManagedSites = !process.env.VERCEL && existsSync(".openai/hosting.json");
 
 const localBindingConfig = {
   main: "vinext/server/fetch-handler",
