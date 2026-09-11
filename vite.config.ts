@@ -8,8 +8,10 @@ const SITE_CREATOR_PLACEHOLDER_DATABASE_ID =
 
 const d1 = process.env.D1_BINDING;
 const r2 = process.env.R2_BINDING;
+
 const isCodexSeatbeltSandbox = process.env.CODEX_SANDBOX === "seatbelt";
 const managedLinux = readExecutionProfile() === "managed-linux";
+const useManagedSites = !process.env.VERCEL;
 
 const localBindingConfig = {
   main: "vinext/server/fetch-handler",
@@ -51,7 +53,7 @@ export default defineConfig(async () => {
     },
     plugins: [
       vinext(),
-      sites({ mockAuth: !managedLinux }),
+      ...(useManagedSites ? [sites({ mockAuth: !managedLinux })] : []),
       cloudflare({
         viteEnvironment: { name: "rsc", childEnvironments: ["ssr"] },
         inspectorPort: false,

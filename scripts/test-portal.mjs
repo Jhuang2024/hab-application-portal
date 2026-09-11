@@ -11,7 +11,7 @@ const db={prepare(sql){let values=[];return {bind(...v){values=v;return this;},a
 function load(file,mocks={}){const js=ts.transpileModule(readFileSync(file,'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText;const exports={};new Function('require','exports',js)(name=>name in mocks?mocks[name]:require(name),exports);return exports;}
 const model=load('lib/portal-model.ts');
 const validation=load('lib/validation.ts',{'./portal-model':model});
-const api=load('app/api/portal/route.ts',{'../../chatgpt-auth':{getChatGPTUser:async()=>currentUser},'@/lib/db':{database:()=>db,organizerEmails:()=>['organizer@example.test']},'@/lib/validation':validation});
+const api=load('app/api/portal/route.ts',{'@/lib/db':{database:()=>db,organizerEmails:()=>['organizer@example.test']},'@/lib/validation':validation});
 const user=(id,email)=>({userId:id,email,displayName:id,fullName:id});
 const request=(body,origin='https://assembly.test')=>new Request('https://assembly.test/api/portal',{method:'POST',headers:{origin,'content-type':'application/json'},body:JSON.stringify(body)});
 const get=async(q='')=>(await api.GET(new Request('https://assembly.test/api/portal'+q)));
