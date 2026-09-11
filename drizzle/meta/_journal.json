@@ -1,0 +1,20 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1789151390764,
+      "tag": "0000_tearful_robin_chapel",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1789156361233,
+      "tag": "0001_gifted_stick",
+      "breakpoints": true
+    }
+  ]
+}
